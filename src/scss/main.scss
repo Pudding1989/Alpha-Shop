@@ -1,0 +1,1384 @@
+// import google font
+// Inter 400 500 700、Noto San 400 500 700、Nunito Sans 400 700
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&family=Nunito+Sans:wght@400;700&display=swap');
+
+// reset css
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0%;
+  padding: 0%;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.btn,
+button,
+button:focus,
+input:focus,
+textarea:focus,
+select,
+select:focus,
+a:focus {
+  outline: 0px !important;
+}
+
+button {
+  background-color: transparent;
+  border: 0px;
+  cursor: pointer;
+}
+
+button[disabled] {
+  pointer-events: none;
+}
+
+input {
+  padding: 0px;
+}
+
+input:required,
+input:invalid {
+  box-shadow: none;
+}
+
+// display
+@each $var in (none, inline, inline-block, block, flex) {
+  .d-#{$var} {
+    display: $var;
+  }
+}
+
+// display layout
+.flex-column {
+  flex-direction: column;
+}
+.justify-content-start {
+  justify-content: flex-start;
+}
+.justify-content-end {
+  justify-content: flex-end;
+}
+.justify-content-center {
+  justify-content: center;
+}
+.justify-content-between {
+  justify-content: space-between;
+}
+.justify-content-around {
+  justify-content: space-around;
+}
+.align-content-start {
+  align-content: flex-start;
+}
+.align-content-end {
+  align-content: flex-end;
+}
+.align-content-center {
+  align-content: center;
+}
+.align-items-start {
+  align-items: flex-start;
+}
+.align-items-end {
+  align-items: flex-end;
+}
+.align-items-center {
+  align-items: center;
+}
+.text-center {
+  text-align: center;
+}
+.text-right {
+  text-align: right;
+}
+.text-left {
+  text-align: left;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+// sizing: width & height
+$sizing: (
+  w: width,
+  h: height
+);
+
+$scale: (
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%
+);
+
+@each $abbrev, $prop in $sizing {
+  @each $number, $value in $scale {
+    .#{$abbrev}-#{$number} {
+      #{$prop}: $value;
+    }
+  }
+}
+
+// spacing: margin & padding
+$space: 1rem;
+
+$spacing: (
+  0: 0,
+  1: (
+    $space * 0.25
+  ),
+  2: (
+    $space * 0.5
+  ),
+  3: (
+    $space * 0.75
+  ),
+  4: (
+    $space * 1
+  ),
+  5: (
+    $space * 1.25
+  ),
+  6: (
+    $space * 1.5
+  ),
+  7: (
+    $space * 1.75
+  ),
+  8: (
+    $space * 2
+  )
+);
+
+@each $abbrev, $prop in (m: margin, p: padding) {
+  @each $number, $value in $spacing {
+    .#{$abbrev}-#{$number} {
+      #{$prop}: $value;
+    }
+    .#{$abbrev}t-#{$number} {
+      #{$prop}-top: $value;
+    }
+    .#{$abbrev}r-#{$number} {
+      #{$prop}-right: $value;
+    }
+    .#{$abbrev}b-#{$number} {
+      #{$prop}-bottom: $value;
+    }
+    .#{$abbrev}l-#{$number} {
+      #{$prop}-left: $value;
+    }
+    .#{$abbrev}x-#{$number} {
+      #{$prop}-left: $value;
+      #{$prop}-right: $value;
+    }
+    .#{$abbrev}y-#{$number} {
+      #{$prop}-top: $value;
+      #{$prop}-bottom: $value;
+    }
+  }
+}
+
+// 產生 stepper 數字
+@mixin genStepNumber($step) {
+  @for $i from 1 through $step {
+    &:nth-child(#{$i}) .step-circle::after {
+      content: '#{$i}';
+    }
+  }
+}
+
+// 定義變數
+$view-width: 1440px;
+$view-min-width: 1200px;
+$six-columns-width: 540px;
+$total-step: 3;
+
+:root {
+  --body-background: #ffffff;
+  --theme-pink: #f67599;
+  --theme-deep-pink: #c45d7a;
+  --main-text-black: #2a2a2a;
+  // for header
+  --header-background: #ffffff;
+  --menu-border: rgba(42, 42, 42, 20%);
+  --tool-icon: #2a2a2a;
+  // for step
+  --step-disable: #afb1bd;
+  --step-line-active: #000000;
+  --step-one-fill: #2a2a2a;
+  --step-checked-fill: #333333;
+  // for form
+  --form-label-gray: #808080;
+  --form-input-border: #4a4a4a;
+  --placeholder: #999999;
+  --select-triangle: #2a2a2a;
+  // for radio input
+  --radio-label-border: #f0f0f5;
+  --radio-input-border: #222222;
+  --radio-input-background: #ffffff;
+  --radio-input-inset: #2a2a2a;
+  --radio-text: #000000;
+  --radio-describe: #000000;
+  // for cart
+  --cart-background: #ffffff;
+  --cart-border: #f0f0f5;
+  --cart-button-background: #f0f0f5;
+  --cart-button-svg: #000000;
+  --cart-price: #000000;
+  --quantity-input-font: Inter;
+  --quantity-input-weight: 500;
+  // for form-control button
+  --form-control-border: #e6e6eb;
+  --button-font-color: #000000;
+  // for footer
+  --footer-background: #f6f7f8;
+  --footer-subject: #808080;
+  --social-icon: #808080;
+}
+
+[data-theme='dark'] {
+  --body-background: #121212;
+  --main-text-black: #ffffff;
+  // for header
+  --header-background: #121212;
+  --menu-border: rgba(255, 255, 255, 20%);
+  --tool-icon: rgba(255, 255, 255, 80%);
+  // for step
+  --step-disable: rgba(240, 240, 245, 40%);
+  --step-line-active: #ffffff;
+  --step-one-fill: #333333;
+  // for form
+  --form-label-gray: rgba(255, 255, 255, 40%);
+  --form-input-border: #5e5e5e;
+  --placeholder: rgba(255, 255, 255, 30%);
+  --select-triangle: #5e5e5e;
+  // for radio input
+  --radio-label-border: #ffffff;
+  --radio-input-border: #333333;
+  --radio-input-background: #333333;
+  --radio-input-inset: #333333;
+  --radio-text: #ffffff;
+  --radio-describe: rgba(255, 255, 255, 40%);
+  // for cart
+  --cart-background: #383838;
+  --cart-border: rgba(255, 255, 255, 20%);
+  --cart-button-background: #808080;
+  --cart-button-svg: #333333;
+  --cart-price: #ffffff;
+  --quantity-input-font: Nunito Sans;
+  --quantity-input-weight: 700;
+  // for form-control button
+  --form-control-border: rgba(255, 255, 255, 20%);
+  --button-font-color: #ffffff;
+  // for footer
+  --footer-background: #333333;
+  --footer-subject: #ffffff;
+  --social-icon: rgba(255, 255, 255, 50%);
+}
+
+// 設定字體
+body {
+  font-family: Noto Sans TC;
+  // mobile layout
+  min-width: 375px;
+  background-color: var(--body-background);
+
+  // 去除 input[type="number"] 自帶的上下箭頭
+  input[type='number'] {
+    // for firefox
+    -moz-appearance: textfield;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  // 按鈕圖示可被穿透
+  button > svg {
+    pointer-events: none;
+  }
+
+  // 控制logo字母
+  .ac-logo {
+    path:nth-child(-n + 9) {
+      fill: var(--main-text-black);
+    }
+  }
+}
+
+.title,
+.form-row label,
+.cost p {
+  font-weight: 700;
+}
+
+.menu li {
+  font-weight: 500;
+}
+
+product p,
+cost p,
+.step-circle::after {
+  font-family: Nunito Sans;
+}
+
+// mobile first
+// header layout
+header {
+  height: 56px;
+  position: sticky;
+  top: 0%;
+  z-index: 1;
+  background-color: var(--header-background);
+  // 固定寬度整個 header 最大寬度
+  .wrapper {
+    padding: 16px 0;
+  }
+
+  label {
+    margin-left: 15px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+nav {
+  position: absolute;
+  top: 100%;
+
+  width: 100%;
+  background-color: var(--header-background);
+  color: var(--main-text-black);
+
+  transition: transform 0.35s ease-out;
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+// nav 開關
+input#burger-toggle:checked ~ nav {
+  transform: scaleY(1);
+
+  .menu-item,
+  .toolbar {
+    transition: opacity 0.35s ease-in 0.25s;
+    opacity: 100%;
+  }
+}
+
+.menu-item,
+.toolbar {
+  opacity: 0%;
+  margin: auto percentage(14.5px /375px);
+
+  padding: 24px 0;
+  border-top: 1px solid var(--menu-border);
+
+  text-align: center;
+}
+
+.menu-item {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  &:first-child {
+    border-top: none;
+  }
+
+  &:hover {
+    color: var(--theme-pink);
+  }
+  &:focus {
+    color: var(--theme-deep-pink);
+  }
+}
+
+.toolbar {
+  button,
+  label {
+    width: 24px;
+    height: 24px;
+
+    margin-right: 40px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    // 配合 dark mode控制 icon
+    svg {
+      path {
+        fill: var(--tool-icon);
+      }
+    }
+
+    &:hover {
+      svg path {
+        fill: var(--theme-pink);
+      }
+    }
+    // &:focus {
+    //   svg path {
+    //     fill: var(--theme-deep-pink);
+    //   }
+    // }
+  }
+
+  // dark mode 按鈕
+  label.dark-mode {
+    cursor: pointer;
+
+    svg {
+      path {
+        fill: inherit;
+        stroke: var(--tool-icon);
+      }
+    }
+
+    &:hover {
+      svg path {
+        stroke: var(--theme-pink);
+      }
+    }
+  }
+}
+
+// main layout
+main {
+  max-width: 375px;
+  margin: 16px auto 40px;
+}
+
+// 結帳
+.checkout {
+  h1.title {
+    margin-left: 15px;
+
+    color: var(--main-text-black);
+    font-size: 1.5rem;
+    line-height: 2.375rem;
+  }
+
+  .step-panel {
+    margin: 24px 16px 24px 15px;
+    transition: all 0.35s ease-in-out;
+  }
+
+  .form-area {
+    margin: auto 14px auto 15px;
+    transition: all 0.5s ease-in-out;
+  }
+}
+
+.cart {
+  margin: 0 15px 32px;
+  padding: 16px;
+  border: 1px solid var(--cart-border);
+  border-radius: 8px;
+
+  transition: all 0.65s ease-out;
+}
+
+.form-control {
+  margin: auto 15px;
+  transition: all 0.35s ease-in-out;
+}
+
+// component styling
+// step-panel
+.step {
+  display: flex;
+  align-items: center;
+
+  position: relative;
+  // 產生步驟內部數字
+  @include genStepNumber(3);
+  color: var(--step-disable);
+
+  .step-circle {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+
+    // 對齊步驟內部數字
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // 預設未啟用狀態
+    border: 1px solid var(--step-disable);
+    transition: border 0.5s ease-out;
+
+    text-align: center;
+    // step 內部數字
+    &::after {
+      font-size: 1rem;
+      line-height: 1rem;
+    }
+  }
+
+  .step-subject {
+    // 隱藏步驟標題
+    font-size: 0;
+  }
+
+  // 首個 step 預設狀態
+  &:first-child {
+    .step-circle {
+      color: white;
+      background-color: var(--step-one-fill);
+      border-color: var(--step-one-fill);
+    }
+  }
+
+  // 前2個 step，產生連結線
+  &:nth-child(-n + #{$total-step - 1}) {
+    // 佔據未分配空間，顯示連接線
+    flex-grow: 1;
+    // 隱藏突出連接線
+    overflow: hidden;
+    .step-subject {
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        // 手機版採取固定寬度
+        left: 32px;
+
+        top: 50%;
+        transform: translateY(-50%);
+
+        height: 2px;
+        width: 30vw;
+        // 預設未啟用狀態
+        background-color: var(--step-disable);
+        transition: background-color 0.5s ease-out 0.35s;
+      }
+    }
+  }
+
+  // 從第2個 step 開始遮擋連結線
+  // 手機版採取固定寬度
+  &:nth-child(n + #{$total-step - 1}) {
+    margin-left: 32px;
+  }
+
+  transition: color 0.5s ease-out;
+  // step 啟用、完成共用狀態
+  &.active,
+  &.check {
+    color: var(--main-text-black);
+    // step 連接線
+    .step-subject::after {
+      background-color: var(--step-line-active);
+    }
+  }
+
+  // step 啟用狀態
+  &.active {
+    .step-circle {
+      border-color: var(--main-text-black);
+    }
+  }
+
+  //step 完成狀態
+  &.check {
+    .step-circle {
+      border-color: var(--step-checked-fill);
+      background-color: var(--step-checked-fill);
+      // 勾號定位點
+      position: relative;
+      // step 內部勾號
+      // * stock overflow 學來的奇技淫巧
+      &::after {
+        content: '';
+        /* position the checkbox */
+        position: absolute;
+        // 應該只能手工對齊
+        top: 15%;
+        left: 35%;
+        /* setting the checkbox */
+        /* short arm */
+        width: 6px;
+        border-bottom: 3px solid white;
+        /* long arm */
+        height: 13px;
+        border-right: 3px solid white;
+
+        transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+// form-area
+// 共用樣式
+.form-area {
+  select {
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+  }
+
+  .mobile-short {
+    width: percentage(133px / 346px);
+  }
+  .mobile-middle {
+    width: percentage(158px / 346px);
+  }
+  .mobile-long {
+    width: percentage(183px / 346px);
+  }
+
+  // 偽元素產生 drop down 三角形
+  .form-select {
+    // drop down 三角形定位點
+    position: relative;
+    &::after {
+      // 點擊可穿透偽元素
+      pointer-events: none;
+
+      position: absolute;
+      top: calc(17px + 20px);
+      transform: translate(-50%, 100%);
+      right: 18px;
+
+      content: '';
+      border-style: solid;
+      border-width: 5px 4.5px 0 4.5px;
+      border-color: var(--select-triangle) transparent transparent transparent;
+    }
+  }
+}
+
+// 轉場淡出、淡入
+.form-part {
+  opacity: 0%;
+  transition: opacity 0.35s ease-out;
+  &.visible {
+    opacity: 100%;
+  }
+}
+
+.form-row,
+.form-radio {
+  margin-bottom: 24px;
+}
+
+.desktop-flex {
+  .form-input,
+  .form-select {
+    margin-bottom: 16px;
+  }
+}
+
+.form-row,
+label.form-radio {
+  &:last-child {
+    margin-bottom: 32px;
+  }
+}
+
+.form-row {
+  h3.title {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    color: var(--main-text-black);
+  }
+
+  input,
+  select,
+  label {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  input,
+  select {
+    border: 1px solid var(--form-input-border);
+    border-radius: 4px;
+    height: 40px;
+
+    width: 100%;
+
+    padding: 12px 16px;
+
+    background-color: transparent;
+    color: var(--main-text-black);
+    &:invalid {
+      color: var(--placeholder);
+    }
+  }
+
+  label {
+    margin-bottom: 8px;
+    display: block;
+    color: var(--form-label-gray);
+  }
+
+  .desktop-long input {
+    padding: 12px 18px;
+  }
+}
+
+label.form-radio {
+  border: 1px solid var(--radio-label-border);
+  border-radius: 4px;
+
+  display: block;
+  cursor: pointer;
+  height: 60px;
+  padding: 11px 20px;
+
+  display: flex;
+  align-items: center;
+
+  transition: border 0.35s ease-out;
+  &:hover {
+    border: 1px solid var(--main-text-black);
+    h5 {
+      font-weight: 400;
+    }
+  }
+
+  // span 定位點
+  position: relative;
+
+  h5 {
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--radio-text);
+    color: var(--radio-text);
+  }
+
+  p,
+  span {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  p {
+    color: var(--radio-describe);
+  }
+
+  span {
+    position: absolute;
+    right: 20px;
+    top: 13px;
+
+    color: var(--radio-text);
+  }
+
+  input[type='radio'] {
+    width: 20px;
+    height: 20px;
+    margin-right: 20px;
+
+    appearance: none;
+    border: 1px solid var(--radio-input-border);
+    border-radius: 50%;
+    background-color: var(--radio-input-background);
+
+    transition: all 0.35s ease-in;
+    &:checked {
+      background-color: white;
+      border: none;
+
+      box-shadow: inset 0 0 0 6px var(--radio-input-inset);
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: -1px;
+        left: -1px;
+
+        width: 100%;
+        height: 100%;
+
+        border-radius: 4px;
+        border: 1px solid var(--main-text-black);
+        // 讓這層元素被滑鼠穿透過去
+        pointer-events: none;
+      }
+
+      & ~ * {
+        font-family: Inter;
+        h5 {
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+// form-control button
+.form-control {
+  padding-top: 24px;
+  border-top: 1px solid var(--form-control-border);
+
+  // mobile layout 首個 Step 預設按鈕狀態
+  &.initial {
+    button#previous {
+      display: none;
+    }
+    button#next {
+      flex-grow: 1;
+    }
+  }
+
+  .btn {
+    height: 46px;
+    width: percentage(156px / 345px);
+    border-radius: 8px;
+  }
+
+  button#previous {
+    text-align: left;
+    color: var(--button-font-color);
+    transition: color 0.35s ease-out;
+
+    svg {
+      margin-right: 12.5px;
+    }
+
+    path {
+      fill: var(--button-font-color);
+      transition: fill 0.35s ease-out;
+    }
+
+    &:hover {
+      color: var(--theme-pink);
+      path {
+        fill: var(--theme-pink);
+      }
+    }
+
+    // &:focus {
+    //   color: var(--theme-deep-pink);
+    //   path {
+    //     fill: var(--theme-deep-pink);
+    //   }
+    // }
+  }
+
+  button#next {
+    background-color: var(--theme-pink);
+    color: white;
+
+    svg {
+      margin-left: 13.5px;
+    }
+    // 按鈕長度縮放
+    transition: all 0.35s ease-out;
+    &:hover {
+      background-color: var(--theme-deep-pink);
+    }
+    &:focus {
+      box-shadow: 0 0 0 0.25rem rgba(246, 117, 153, 0.5);
+    }
+  }
+}
+
+// cart
+.cart {
+  background-color: var(--cart-background);
+  h3.title {
+    display: none;
+  }
+}
+
+.product-list {
+  margin-bottom: 16px;
+  max-height: calc((102px * 2) + 18px);
+  overflow: scroll;
+
+  // 產品價格
+  p {
+    color: var(--cart-price);
+  }
+
+  img {
+    width: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+  }
+
+  input[type='number'] {
+    // 去除外框
+    appearance: none;
+    border: none;
+
+    width: 53.12px;
+    margin: 0 5.42px;
+
+    background-color: transparent;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+
+    color: var(--cart-price);
+    font-family: var(--quantity-input-font);
+    font-weight: var(--quantity-input-weight);
+  }
+
+  button {
+    height: 26px;
+    width: 27px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--cart-button-background);
+    transition: background-color ease-out 0.35s;
+
+    svg > * {
+      fill: var(--cart-button-svg);
+      transition: fill ease-out 0.35s;
+    }
+
+    &:hover,
+    &:active {
+      background-color: var(--cart-button-svg);
+
+      svg > * {
+        fill: var(--cart-button-background);
+      }
+    }
+  }
+}
+
+.product {
+  margin-bottom: 18px;
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
+}
+
+.order {
+  flex-direction: column;
+  align-items: flex-end;
+
+  margin-left: 21px;
+  width: 100%;
+
+  h5.order-product {
+    color: var(--main-text-black);
+    margin-bottom: 18px;
+    font-weight: 400;
+
+    text-align: right;
+  }
+  .order-quantity {
+    margin-bottom: 17px;
+  }
+
+  .product-price {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+
+.cost {
+  border-top: 1px solid var(--cart-border);
+  padding: 16px percentage((24.25px - 16px) / 313px) 16px
+    percentage((16.78px - 16px) / 313px);
+
+  &:last-child {
+    padding-bottom: 0px;
+  }
+
+  span {
+    color: var(--main-text-black);
+    font-size: 14px;
+  }
+
+  p {
+    color: var(--cart-price);
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+// footer
+// mobile 排版不顯示
+footer {
+  display: none;
+}
+// desktop layout
+@media screen and (min-width: 376px) {
+  body {
+    min-width: $view-min-width;
+  }
+  // header layout
+  header {
+    height: 60px;
+    max-width: $view-width;
+    margin: 0 auto;
+    .wrapper {
+      padding: 15px #{percentage(165px / $view-width)};
+    }
+
+    label.burger-toggle {
+      display: none;
+    }
+
+    .logo {
+      // 桌面版調整位置
+      left: 55%;
+    }
+  }
+
+  nav {
+    // 消除漢堡排設定
+    position: static;
+    transform: scaleY(1);
+    width: unset;
+    background-color: unset;
+
+    display: flex;
+    justify-content: space-between;
+
+    .menu {
+      display: flex;
+    }
+  }
+
+  // 消除漢堡排設定
+  .menu-item,
+  .toolbar {
+    opacity: 100%;
+    border-top: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .menu-item {
+    margin-right: 32px;
+
+    &:last-child {
+      margin-right: 0px;
+    }
+  }
+
+  // main layout
+  main {
+    max-width: $view-width;
+    margin: 80px auto 120px auto;
+  }
+
+  // 採用 grid 排版
+  form {
+    padding: 0 #{percentage(165px / $view-width)};
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    grid-gap: 0 30px;
+  }
+
+  // 結帳
+  .checkout {
+    grid-column: 1 / span 6;
+
+    h1.title {
+      margin-left: unset;
+
+      color: var(--main-text-black);
+      font-size: 2rem;
+    }
+    .step-panel {
+      margin: 48px 0 64px;
+    }
+
+    .form-area {
+      margin: unset;
+    }
+  }
+
+  .cart {
+    grid-area: 1/8 / span 2 / span 5;
+
+    margin: 86px 0 0 5px;
+
+    height: 492px;
+    border: 1px solid var(--cart-border);
+    border-radius: 8px;
+    padding: 32px 24px;
+  }
+
+  .form-control {
+    grid-area: 2 / 1 / span 1 / span 6;
+    margin: 0;
+  }
+
+  // component styling
+  // step-panel
+  .step {
+    .step-circle {
+      width: 24px;
+      height: 24px;
+      // 步驟標題間距
+      margin-right: 8px;
+
+      // step 內部數字
+      &::after {
+        font-size: 0.75rem;
+        line-height: 1rem;
+      }
+    }
+
+    .step-subject {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    // 依照1400px 比例，調整連結線左側起始位置
+    &:nth-child(-n + #{$total-step - 1}) {
+      .step-subject {
+        &::after {
+          left: calc(100% + #{$view-min-width} * (32 / 1440));
+        }
+      }
+    }
+
+    // 從第2個 step 開始遮擋連結線
+    &:nth-child(n + #{$total-step - 1}) {
+      margin-left: percentage(32px / $six-columns-width);
+    }
+
+    //step 完成狀態
+    // 調整step 內部勾號大小位置
+    &.check {
+      .step-circle {
+        &::after {
+          top: 12%;
+          left: 31%;
+          /* setting the checkbox */
+          /* short arm */
+          width: 5px;
+          /* long arm */
+          height: 11px;
+        }
+      }
+    }
+  }
+
+  // form-area
+  .form-area {
+    .desktop-short {
+      width: percentage(160px / $six-columns-width);
+    }
+    .desktop-middle {
+      width: percentage(255px / $six-columns-width);
+    }
+    .desktop-long {
+      width: percentage(350px / $six-columns-width);
+    }
+  }
+
+  .desktop-flex {
+    display: flex;
+
+    .form-input,
+    .form-select {
+      margin-bottom: unset;
+    }
+  }
+
+  .form-row {
+    &:last-child {
+      margin-bottom: 48px;
+    }
+  }
+
+  label.form-radio {
+    &:last-child {
+      margin-bottom: 144px;
+    }
+  }
+
+  // form-control button
+  .form-control {
+    .btn {
+      width: percentage(174px / $six-columns-width);
+    }
+    // desktop layout 首個 Step 預設按鈕狀態
+    // 消除 mobile layout 的按鈕狀態
+    &.initial {
+      button#previous {
+        display: inline-block;
+        visibility: hidden;
+      }
+      button#next {
+        flex-grow: 0;
+      }
+    }
+  }
+
+  // cart
+  .cart {
+    h3.title {
+      display: block;
+      color: var(--main-text-black);
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }
+
+  .product-list {
+    margin: 32px 0px;
+    max-height: calc((100px * 2) + 32px);
+  }
+  // 產品列間距
+  .product {
+    margin-bottom: 32px;
+  }
+
+  .order {
+    // 消除 mobile layout 排版
+    flex-direction: row;
+    align-items: flex-start;
+
+    h5.order-product {
+      text-align: left;
+    }
+  }
+
+  .cost {
+    padding: 16px percentage((33.88px - 24px) /392px) 32px
+      percentage((24.98px - 24px) /392px);
+  }
+
+  // footer layout
+  footer {
+    display: block;
+    // 背景色
+    background-color: var(--footer-background);
+    .shoe {
+      max-width: $view-width;
+      margin: 0 auto;
+    }
+
+    .sock {
+      padding: 64px #{percentage(165px / $view-width)} 80px;
+    }
+
+    h3.title {
+      color: var(--main-text-black);
+      font-size: 24px;
+      line-height: 24px;
+      margin-bottom: 24px;
+    }
+  }
+
+  .subject-list {
+    li {
+      color: var(--footer-subject);
+      margin-bottom: 8px;
+      font-size: 16px;
+      line-height: 17px;
+
+      &:last-child {
+        margin-bottom: 0px;
+      }
+      &:hover {
+        color: var(--theme-pink);
+      }
+      &:focus {
+        color: var(--theme-deep-pink);
+      }
+    }
+
+    .phone {
+      cursor: pointer;
+      line-height: 16px;
+    }
+
+    .social {
+      // 配合 dark mode控制 icon
+      svg {
+        path {
+          fill: var(--social-icon);
+        }
+      }
+
+      a {
+        width: 24px;
+        height: 24px;
+        margin-right: 16px;
+        &:last-child {
+          margin-right: 0px;
+        }
+        &:hover {
+          path {
+            fill: var(--theme-pink);
+          }
+        }
+      }
+    }
+  }
+} // desktop end
+
+// 處理 step 連接線
+@media screen and (min-width: #{$view-min-width + 1px} ) and ( max-width: #{$view-width} ) {
+  .step:nth-child(-n + #{$total-step - 1}) {
+    .step-subject {
+      &::after {
+        left: calc(100% + 100vw * (32 / 1440));
+      }
+    }
+  }
+}
+
+@media screen and (min-width: #{$view-width + 1px} ) {
+  .step:nth-child(-n + #{$total-step - 1}) {
+    .step-subject {
+      &::after {
+        left: calc(100% + 32px);
+      }
+    }
+  }
+}
