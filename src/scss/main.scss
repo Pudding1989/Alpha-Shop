@@ -224,6 +224,7 @@ $spacing: (
 // 定義變數
 $view-width: 1440px;
 $view-min-width: 1200px;
+$breakpoint: 576px;
 $six-columns-width: 540px;
 $total-step: 3;
 
@@ -484,7 +485,7 @@ input#burger-toggle:checked ~ nav {
 
 // main layout
 main {
-  max-width: 375px;
+  max-width: $breakpoint;
   margin: 16px auto 40px;
 }
 
@@ -1049,7 +1050,7 @@ footer {
   display: none;
 }
 // desktop layout
-@media screen and (min-width: 376px) {
+@media screen and (min-width: $breakpoint) {
   body {
     min-width: $view-min-width;
   }
