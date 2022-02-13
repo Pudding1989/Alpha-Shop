@@ -768,13 +768,9 @@ label.form-radio {
   border: 1px solid var(--radio-label-border);
   border-radius: 4px;
 
-  display: block;
   cursor: pointer;
   height: 60px;
   padding: 11px 20px;
-
-  display: flex;
-  align-items: center;
 
   transition: border 0.35s ease-out;
   &:hover {
